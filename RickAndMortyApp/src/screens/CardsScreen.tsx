@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
+import { TextInput, Button, Title } from 'react-native-paper';
 import { getCharacterById } from '../services/api';
 import CardItem from '../components/CardItem';
 
@@ -9,21 +10,34 @@ export default function CardsScreen({ navigation }: any) {
 
   const handleAdd = async () => {
     const character = await getCharacterById(id);
-    if (character) setCards([...cards, character]);
+    if (character) {
+      setCards([...cards, character]);
+      setId('');
+    }
   };
 
   const handleDelete = (index: number) => {
-    const newList = cards.filter((_, i) => i !== index);
-    setCards(newList);
+    const updatedCards = cards.filter((_, i) => i !== index);
+    setCards(updatedCards);
   };
 
   return (
-    <View>
-      <TextInput placeholder="ID do personagem" onChangeText={setId} />
-      <Button title="ADD" onPress={handleAdd} />
+    <View style={styles.container}>
+      <Title style={styles.title}>Personagens de Rick and Morty</Title>
+      <TextInput
+        label="ID do personagem"
+        value={id}
+        onChangeText={setId}
+        keyboardType="numeric"
+        style={styles.input}
+      />
+      <Button mode="contained" onPress={handleAdd} style={styles.button}>
+        Adicionar Card
+      </Button>
+
       <FlatList
         data={cards}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
           <CardItem
             character={item}
@@ -35,3 +49,10 @@ export default function CardsScreen({ navigation }: any) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 20 },
+  title: { textAlign: 'center', marginBottom: 20 },
+  input: { marginBottom: 10 },
+  button: { marginBottom: 20 },
+});

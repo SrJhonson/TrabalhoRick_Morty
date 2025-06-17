@@ -1,17 +1,27 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
+import { Card, Title, Paragraph } from 'react-native-paper';
 
 export default function CardDetailScreen({ route }: any) {
   const { character } = route.params;
 
   return (
-    <View>
-      <Image source={{ uri: character.image }} style={{ width: 200, height: 200 }} />
-      <Text>Nome: {character.name}</Text>
-      <Text>Status: {character.status}</Text>
-      <Text>Espécie: {character.species}</Text>
-      <Text>Origem: {character.origin.name}</Text>
-      <Text>Localização: {character.location.name}</Text>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Card>
+        <Card.Cover source={{ uri: character.image }} />
+        <Card.Content>
+          <Title>{character.name}</Title>
+          <Paragraph>Espécie: {character.species}</Paragraph>
+          <Paragraph>Origem: {character.origin.name}</Paragraph>
+          <Paragraph>Localização Atual: {character.location.name}</Paragraph>
+          <Paragraph>Status: {character.status}</Paragraph>
+          <Paragraph>Gênero: {character.gender}</Paragraph>
+        </Card.Content>
+      </Card>
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { padding: 20 },
+});
