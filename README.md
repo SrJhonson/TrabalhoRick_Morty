@@ -60,7 +60,7 @@ npm install -g expo-cli
 
 2. Clone este repositório:
 ```bash
-git clone https://github.com/seu-usuario/rick-and-morty-app.git
+git clone https://github.com/SrJhonson/TrabalhoRick_Morty.git
 cd rick-and-morty-app
 ```
 
